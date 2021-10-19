@@ -18,7 +18,7 @@ if ( ! isset( $argv[1] ) ) {
 
 $word = $argv[1];
 
-// get rhymes from onelook
+// get rhymes from datamuse.com
 $url = 'https://api.datamuse.com/words?rel_rhy=' . $word;
 
 $results = json_decode( file_get_contents( $url ), true );
