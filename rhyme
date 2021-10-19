@@ -22,7 +22,6 @@ $url = 'https://api.datamuse.com/words?rel_rhy=' . $word;
 
 $results = json_decode( file_get_contents( $url ), true );
 
-// just grab first 20 
 $shortlist = array_slice( $results, 0, 100 );
 
 $i = 0;
@@ -47,4 +46,5 @@ foreach ( $shortlist as $word_item ) {
 if ( $more ) {
 	echo( '(Plus ' . $more . ' more rhymes not shown)' );
 }
+
 
