@@ -1,0 +1,37 @@
+#!/usr/bin/php 
+
+// Simple rhyme tool for CLI use
+//
+// To install:
+// cp rhyme /usr/local/bin/rhyme
+// chmod +x rhyme
+// 
+// To use:
+// rhyme <word>
+
+<?php 
+
+if ( ! isset( $argv[1] ) ) {
+	echo( 'Usage: rhyme <word>' );
+	die();
+}
+
+$word = $argv[1];
+
+// get rhymes from onelook
+$url = 'https://api.datamuse.com/words?rel_rhy=' . $word;
+
+$results = json_decode( file_get_contents( $url ), true );
+
+// just grab first 20 
+$shortlist = array_slice( $results, 0, 20 );
+$more = count( array_slice( $results, 20 ) );
+
+foreach ( $shortlist as $word_item ) {
+	echo $word_item['word'] . "\n\r";
+}
+
+if ( $more ) {
+	echo( '(Plus ' . $more . ' more rhymes not shown)' );
+}
+
