@@ -15,21 +15,34 @@ if ( ! isset( $argv[1] ) ) {
 	echo( 'Usage: rhyme <word>' );
 	die();
 }
-
 $word = $argv[1];
 
-// get rhymes from datamuse.com
+// get rhymes from onelook
 $url = 'https://api.datamuse.com/words?rel_rhy=' . $word;
 
 $results = json_decode( file_get_contents( $url ), true );
 
 // just grab first 20 
-$shortlist = array_slice( $results, 0, 20 );
-$more = count( array_slice( $results, 20 ) );
+$shortlist = array_slice( $results, 0, 100 );
+
+$i = 0;
+$maxlength = 0;
 
 foreach ( $shortlist as $word_item ) {
-	echo $word_item['word'] . "\n\r";
+	$maxlength = max( $maxlength, strlen( $word_item['word'] ) + 2 );
 }
+
+foreach ( $shortlist as $word_item ) {
+	if ( $i % 2 == 0 ) {
+		$rendered = str_pad( $word_item['word'], $maxlength );
+	} elseif ( $i % 2 == 1 ) {
+		$rendered = $word_item['word'] . "\n\r";
+	}
+
+	echo $rendered;
+	$i++;	
+}
+
 
 if ( $more ) {
 	echo( '(Plus ' . $more . ' more rhymes not shown)' );
