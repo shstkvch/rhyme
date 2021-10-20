@@ -1,0 +1,78 @@
+#!/usr/bin/php 
+<?php 
+
+if ( ! isset( $argv[1] ) ) {
+	echo( 'Usage: relrhyme <word>' );
+	die();
+}
+
+$orig_phrase = join( ' ', array_slice( $argv, 1 ) );
+
+$phrase = str_replace( ' ', '+', $orig_phrase );
+
+$same_meaning = getWordsWithSameMeaning( $phrase, 25 );
+
+echo( 'Looking up words that rhyme with the meaning of "' . $orig_phrase . "\"\n\r" ); 
+
+foreach ( $same_meaning as $word_item ) {
+	$word = $word_item['word'];
+
+	echo ( $word  . "\n\r" );
+
+	$rhymes = getRhymesForWord( $word, 25 );
+
+	foreach ( $rhymes as $rhyme ) {
+		echo( "\t" . $rhyme . "\n\r" );
+	}
+}
+
+$rhymes = getRhymesForWord('cat');
+
+function getWordsWithSameMeaning( $phrase, $num = 5 ) {
+	// get word with same meaning
+	$url = 'https://api.datamuse.com/words?ml=' . $phrase;
+
+	$related = json_decode( file_get_contents( $url ), true );
+
+	return array_slice( $related, 0, $num );
+}
+
+function getRhymesForWord( $phrase, $num = 5 ) {
+	// if we have a phrase, grab the last word
+	$word = end( explode( ' ', $phrase ) );
+
+	$url = 'https://api.datamuse.com/words?rel_rhy=' . $word;
+	$rhymes = json_decode( file_get_contents( $url ), true );
+
+	$rhymes = array_slice( $rhymes, 0, $num );
+
+	$out = [];
+	foreach ( $rhymes as $word_item ) {
+		$out[] = $word_item['word'];
+	}
+
+	return $out;
+}
+// $i = 0;
+// $maxlength = 0;
+
+// foreach ( $shortlist as $word_item ) {
+// 	$maxlength = max( $maxlength, strlen( $word_item['word'] ) + 2 );
+// }
+
+// foreach ( $shortlist as $word_item ) {
+// 	if ( $i % 2 == 0 ) {
+// 		$rendered = str_pad( $word_item['word'], $maxlength );
+// 	} elseif ( $i % 2 == 1 ) {
+// 		$rendered = $word_item['word'] . "\n\r";
+// 	}
+
+// 	echo $rendered;
+// 	$i++;	
+// }
+
+
+// if ( $more ) {
+// 	echo( '(Plus ' . $more . ' more rhymes not shown)' );
+// }
+
