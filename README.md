@@ -14,5 +14,26 @@ chmod +x /usr/local/bin/rhyme
 
 ## Usage
 ```
-rhyme 
+$ rhyme cat
+at           caveat
+that         hat
+rat          bat
+flat         mat
+fat          chat
+pat          scat
+format       combat
+habitat      spat
+tat          brat
+matte        stat
+gnat         plutocrat
+sat          vat
+aristocrat   splat
+matt         gat
+slat         nat
+autocrat     acrobat
+ziggurat     polecat
+thermostat   sprat
+bobcat       laundromat
+diplomat     copycat
+chitchat     brickbat
 ```
