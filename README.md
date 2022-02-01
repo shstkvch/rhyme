@@ -1,6 +1,8 @@
-# Rhyme finder CLI
+# Rhyme finder CLI (0.2)
 
 A CLI tool for songwriters and poets. Quickly find rhymes from your terminal.
+
+Powered by the brilliant [Datamuse API.](https://www.datamuse.com/api/)
 
 ## Requirements
 PHP 7+ installed at `/usr/local/bin/php`
